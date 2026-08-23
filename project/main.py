@@ -43,6 +43,19 @@ def add_homework(tracker):                   #to define a function that prompts 
     tracker.add_assignment(homework)         #it calls the add_assignment method of the GradeTracker instance to add the newly created Homework object to the list of assignments
     print(f"{subject} Homework added successfully.")   
 
+def add_exam(tracker):                       #to define a function that prompts the user for exam details, creates an Exam object, and adds it to the GradeTracker instance
+    print("\n Add a new exam.")
+    subject = input("Enter subject: ")
+    title = input("Enter title: ")
+    score = input("Enter score received: ")
+    max_score = input("Enter maximum score possible: ")
+    due_date = input("Enter due date (YYYY-MM-DD): ")
+
+    exam = Exam(subject, title, score, max_score, due_date)
+    tracker.add_assignment(exam)             #it calls the add_assignment method of the GradeTracker instance to add the newly created Exam object to the list of assignments
+    print(f"{subject} Exam added successfully.")
+
+
 def main():
     tracker = GradeTracker()
     print("Welcome to the Student Grade/Assignment Tracker")
@@ -61,9 +74,9 @@ def main():
         if choice == '1':
             add_homework(tracker)     #it calls the add_homework function to prompt the user for homework details and add the new Homework object to the GradeTracker instance
         elif choice == '2':
-            print("Adding Exam...") 
+            add_exam(tracker)    
         elif choice == '3':
-            print("Listing Assignments...")
+            tracker.list_assignments()  #to call the list_assignments method of the GradeTracker instance to display all the assignments that have been added so far, providing the user with a clear overview of their current assignments and their details
         elif choice == '4':
             print("Filtering Assignments...")
         elif choice == '5':
