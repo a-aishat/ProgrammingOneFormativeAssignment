@@ -1,6 +1,6 @@
 class Assignment:
     def __init__(self, subject, title, score, max_score, due_date, assignment_type):
-        self.subject = subject.lower().strip()              #to remove any leading/trailing whitespace 
+        self.subject = subject.strip()              #to remove any leading/trailing whitespace 
         #come back to this and find a way to adjust the case (take note of the user input and the filtering)
         self.title = title
         self.score = float(score)                           #to ensure that scores are stored/displayed as a float(decimal) for accurate calculations
