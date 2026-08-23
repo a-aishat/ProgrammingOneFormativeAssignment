@@ -41,7 +41,7 @@ def add_homework(tracker):                   #to define a function that prompts 
 
     homework = Homework(subject, title, score, max_score, due_date)
     tracker.add_assignment(homework)         #it calls the add_assignment method of the GradeTracker instance to add the newly created Homework object to the list of assignments
-    print(f"'{subject}' Homework added successfully.")   
+    print(f"{subject} Homework added successfully.")   
 
 def main():
     tracker = GradeTracker()
@@ -59,10 +59,10 @@ def main():
         choice = input("Select an option (0-5): ")
 
         if choice == '1':
-            add_homework(tracker)
+            add_homework(tracker)     #it calls the add_homework function to prompt the user for homework details and add the new Homework object to the GradeTracker instance
         elif choice == '2':
-            print("Adding Exam...")
-        elif choice == '3':
+            print("Adding Exam...") 
+         elif choice == '3':
             print("Listing Assignments...")
         elif choice == '4':
             print("Filtering Assignments...")
