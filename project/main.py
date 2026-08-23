@@ -31,6 +31,18 @@ class GradeTracker:
         for assignment in self.assignments:  #to iterate through the list of assignments and print out the details of each assignment in a formatted manner for easy reading and understanding by the user
             print(f"{assignment.type.title()}: {assignment.title} | Subject: {assignment.subject} | Score: {assignment.score}/{assignment.max_score} | Due: {assignment.due_date}")
 
+def add_homework(tracker):                   #to define a function that prompts the user for homework details, creates a Homework object, and adds it to the GradeTracker instance
+    print("\n Add a new homework.")
+    subject = input("Enter subject: ")
+    title = input("Enter title: ")
+    score = input("Enter score received: ")
+    max_score = input("Enter maximum score possible: ")
+    due_date = input("Enter due date (YYYY-MM-DD): ")
+
+    homework = Homework(subject, title, score, max_score, due_date)
+    tracker.add_assignment(homework)         #it calls the add_assignment method of the GradeTracker instance to add the newly created Homework object to the list of assignments
+    print(f"'{subject}' Homework added successfully.")   
+
 def main():
     tracker = GradeTracker()
     print("Welcome to the Student Grade/Assignment Tracker")
@@ -47,7 +59,7 @@ def main():
         choice = input("Select an option (0-5): ")
 
         if choice == '1':
-            print("Adding Homework...")
+            add_homework(tracker)
         elif choice == '2':
             print("Adding Exam...")
         elif choice == '3':
