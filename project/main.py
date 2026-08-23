@@ -1,3 +1,12 @@
+class Assignment:
+    def __init__(self, subject, title, score, max_score, due_date, assignment_type):
+        self.subject = subject.lower().strip()              #to remove any leading/trailing whitespace and convert to lowercase for consistency for easier search/filtering
+        self.title = title
+        self.score = float(score)                           #to ensure that scores are stored/displayed as a float(decimal) for accurate calculations
+        self.max_score = float(max_score)
+        self.due_date = due_date
+        self.type = assignment_type              #to store the type of assignment (e.g., homework, exam) for filtering and categorization
+
 def main():
     print("Welcome to the Student Grade/Assignment Tracker")
 
