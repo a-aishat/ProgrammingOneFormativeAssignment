@@ -28,6 +28,6 @@ def main():
         else:
             print("Invalid choice. Please select a number from 0 to 5.")
 
-
+#To test the functionality of the main menu loop
 if __name__ == "__main__":
     main()
