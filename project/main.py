@@ -1,6 +1,7 @@
 class Assignment:
     def __init__(self, subject, title, score, max_score, due_date, assignment_type):
-        self.subject = subject.lower().strip()              #to remove any leading/trailing whitespace and convert to lowercase for consistency for easier search/filtering
+        self.subject = subject.lower().strip()              #to remove any leading/trailing whitespace 
+        #come back to this and find a way to adjust the case (take note of the user input and the filtering)
         self.title = title
         self.score = float(score)                           #to ensure that scores are stored/displayed as a float(decimal) for accurate calculations
         self.max_score = float(max_score)
@@ -54,6 +55,7 @@ def add_exam(tracker):                       #to define a function that prompts 
     exam = Exam(subject, title, score, max_score, due_date)
     tracker.add_assignment(exam)             #it calls the add_assignment method of the GradeTracker instance to add the newly created Exam object to the list of assignments
     print(f"{subject} Exam added successfully.")
+
 
 
 def main():
