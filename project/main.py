@@ -62,7 +62,7 @@ def main():
             add_homework(tracker)     #it calls the add_homework function to prompt the user for homework details and add the new Homework object to the GradeTracker instance
         elif choice == '2':
             print("Adding Exam...") 
-         elif choice == '3':
+        elif choice == '3':
             print("Listing Assignments...")
         elif choice == '4':
             print("Filtering Assignments...")
