@@ -7,6 +7,17 @@ class Assignment:
         self.due_date = due_date
         self.type = assignment_type              #to store the type of assignment (e.g., homework, exam) for filtering and categorization
 
+class Homework(Assignment):
+    def __init__(self, subject, title, score, max_score, due_date):
+        #calls the parent class constructor to initialize the common attributes and sets the assignment type to "homework"
+        super().__init__(subject, title, score, max_score, due_date, "homework")
+
+class Exam(Assignment):
+    def __init__(self, subject, title, score, max_score, due_date):
+        #calls the parent class constructor to initialize the common attributes and sets the assignment type to "exam"
+        super().__init__(subject, title, score, max_score, due_date, "exam")
+
+
 def main():
     print("Welcome to the Student Grade/Assignment Tracker")
 
