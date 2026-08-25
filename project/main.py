@@ -123,6 +123,37 @@ def show_summary(tracker):  #to define a function that calculates and displays a
         print(f"Exam Assignments: {len(exam_assignments)} | Total Score: {exam_score:.2f}/{exam_max_score:.2f} | Average Score: {exam_average:.2f}%")   
     #this block calculates and displays the total score, maximum score, and average score for exam assignments, providing a detailed breakdown of the student's performance in exams specifically.
     
+    #average core per subject
+    subject_map = {}  #to initialize an empty dictionary to store the total scores and maximum scores for each subject, allowing for the calculation of average scores by subject
+    for assignment in tracker.assignments:
+        subject = assignment.subject
+        if subject not in subject_map:
+            subject_map[subject] = {'total_score': 0, 'max_score': 0}  #to create a new entry in the subject_map dictionary for each unique subject, initializing the total score and maximum score to zero
+        subject_map[subject]['total_score'] += assignment.score     #to accumulate the total score for each subject by adding the score of the current assignment to the existing total score in the subject_map dictionary
+        subject_map[subject]['max_score'] += assignment.max_score
+
+    print("\nAverage Scores by Subject:")
+    for subject, scores in subject_map.items(): #to iterate through the subject_map dictionary and calculate the average score for each subject, displaying the results in a formatted manner for easy understanding by the user
+        average = (scores['total_score'] / scores['max_score']) * 100 if scores['max_score'] > 0 else 0   #to calculate the average score for each subject as a percentage
+        print(f"{subject}: {average:.2f}% ({scores['total_score']:.2f}/{scores['max_score']:.2f})")
+        #this block calculates and displays the average score for each subject, providing a detailed breakdown of the student's performance across different subjects.
+
+    #highest and lowest scores
+    # Highest and lowest scores
+    highest_assignment = max(tracker.assignments, key=lambda a: (a.score / a.max_score) if a.max_score > 0 else 0) #to find the assignment with the highest score percentage, ensuring that division by zero is avoided if the maximum score is zero
+    lowest_assignment = min(tracker.assignments, key=lambda a: (a.score / a.max_score) if a.max_score > 0 else 0)
+
+    highest_percentage = (highest_assignment.score / highest_assignment.max_score) * 100 if highest_assignment.max_score > 0 else 0   
+    lowest_percentage = (lowest_assignment.score / lowest_assignment.max_score) * 100 if lowest_assignment.max_score > 0 else 0   #to calculate the highest and lowest score percentages for the assignments with the highest and lowest scores, ensuring that division by zero is avoided if the maximum score is zero
+
+    print("\nHighest Scoring Assignment:")
+    print(f"{highest_assignment.type.title()}: {highest_assignment.title} | Subject: {highest_assignment.subject} | Score: {highest_assignment.score}/{highest_assignment.max_score} | Percentage: {highest_percentage:.2f}%")
+    #this block displays the details of the assignment with the highest score percentage
+
+    print("\nLowest Scoring Assignment:")
+    print(f"{lowest_assignment.type.title()}: {lowest_assignment.title} | Subject: {lowest_assignment.subject} | Score: {lowest_assignment.score}/{lowest_assignment.max_score} | Percentage: {lowest_percentage:.2f}%")
+    #this block displays the details of the assignment with the lowest score percentage
+
 def main():
     tracker = GradeTracker()
     print("Welcome to the Student Grade/Assignment Tracker")
