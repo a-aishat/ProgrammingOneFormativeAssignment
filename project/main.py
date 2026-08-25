@@ -138,7 +138,6 @@ def show_summary(tracker):  #to define a function that calculates and displays a
         print(f"{subject}: {average:.2f}% ({scores['total_score']:.2f}/{scores['max_score']:.2f})")
         #this block calculates and displays the average score for each subject, providing a detailed breakdown of the student's performance across different subjects.
 
-    #highest and lowest scores
     # Highest and lowest scores
     highest_assignment = max(tracker.assignments, key=lambda a: (a.score / a.max_score) if a.max_score > 0 else 0) #to find the assignment with the highest score percentage, ensuring that division by zero is avoided if the maximum score is zero
     lowest_assignment = min(tracker.assignments, key=lambda a: (a.score / a.max_score) if a.max_score > 0 else 0)
