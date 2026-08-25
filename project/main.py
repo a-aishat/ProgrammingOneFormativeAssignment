@@ -90,6 +90,39 @@ def filter_assignments(tracker):                #to define a function that promp
     else:
         print("No assignments found matching the filter criteria.")
 
+def show_summary(tracker):  #to define a function that calculates and displays a summary of the student's performance based on the assignments in the GradeTracker instance
+    if not tracker.assignments:  #to check if the assignments list is empty and display a message to the user if there are no assignments to summarize
+        print("No assignments found to summarize.")
+        return
+
+    total_count = len(tracker.assignments)  #to calculate the total number of assignments in the tracker
+    total_score = sum(a.score for a in tracker.assignments)  #to calculate the total score received across all assignments
+    total_max_score = sum(a.max_score for a in tracker.assignments)  #to calculate the total maximum score possible across all assignments
+    average_score = (total_score / total_max_score) * 100 if total_max_score > 0 else 0  #to calculate the average score as a percentage, ensuring that division by zero is avoided if there are no assignments
+
+    #to separate the assignments into homework and exams for calculated breakdown and detailed statistics
+    homework_assignments = [a for a in tracker.assignments if a.type == "homework"]
+    exam_assignments = [a for a in tracker.assignments if a.type == "exam"]
+
+    print("\nSummary:")
+    print(f"Total Assignments: {total_count}")
+    print(f"Total Score: {total_score:.2f}/{total_max_score:.2f}")
+    print(f"Average Score: {average_score:.2f}%")
+
+    if homework_assignments:
+        homework_score = sum(a.score for a in homework_assignments)
+        homework_max_score = sum(a.max_score for a in homework_assignments)
+        homework_average = (homework_score / homework_max_score) * 100 if homework_max_score > 0 else 0
+        print(f"Homework Assignments: {len(homework_assignments)} | Total Score: {homework_score:.2f}/{homework_max_score:.2f} | Average Score: {homework_average:.2f}%")   
+    #this block calculates and displays the total score, maximum score, and average score for homework assignments, providing a detailed breakdown of the student's performance in homework specifically.
+
+    if exam_assignments:
+        exam_score = sum(a.score for a in exam_assignments)
+        exam_max_score = sum(a.max_score for a in exam_assignments)
+        exam_average = (exam_score / exam_max_score) * 100 if exam_max_score > 0 else 0
+        print(f"Exam Assignments: {len(exam_assignments)} | Total Score: {exam_score:.2f}/{exam_max_score:.2f} | Average Score: {exam_average:.2f}%")   
+    #this block calculates and displays the total score, maximum score, and average score for exam assignments, providing a detailed breakdown of the student's performance in exams specifically.
+    
 def main():
     tracker = GradeTracker()
     print("Welcome to the Student Grade/Assignment Tracker")
@@ -114,7 +147,7 @@ def main():
         elif choice == '4':
             filter_assignments(tracker)
         elif choice == '5':
-            print("Showing Summary...")
+            show_summary(tracker)
         elif choice == '0':
             print("Exiting the program. Goodbye!")
             break
