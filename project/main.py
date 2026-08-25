@@ -56,7 +56,39 @@ def add_exam(tracker):                       #to define a function that prompts 
     tracker.add_assignment(exam)             #it calls the add_assignment method of the GradeTracker instance to add the newly created Exam object to the list of assignments
     print(f"{subject} Exam added successfully.")
 
+def filter_assignments(tracker):                #to define a function that prompts the user for filtering criteria and displays the filtered assignments based on the user's input
+    if not tracker.assignments:                     #to check if the assignments list is empty and display a message to the user if there are no assignments to filter
+        print("No assignments found to filter.")
+        return
 
+    print("\n Filter Options:")
+    print("1. Filter by Subject")
+    print("2. Filter by Assignment Type (homework/exam)")
+    print("3. Filter by Month")  
+
+    choice = input("Select a filter option (1-3): ")
+    filtered_assignments = []   #to initialize an empty list to store the assignments that match the filtering criteria specified by the user
+
+    if choice == '1':
+        subject_filter = input("Enter subject to filter by: ").strip().lower()  #to prompt the user for a subject to filter by and convert it to lowercase for case-insensitive comparison
+        filtered_assignments = [a for a in tracker.assignments if a.subject.lower() == subject_filter]  #to create a list of assignments that match the specified subject
+    elif choice == '2':
+        type_filter = input("Enter assignment type to filter by (homework/exam): ").strip().lower()
+        filtered_assignments = [a for a in tracker.assignments if a.type.lower() == type_filter]
+    elif choice == '3':
+        month_filter = input("Enter month to filter by (MM): ").strip().zfill(2)  #to prompt the user for a month to filter by and ensure it is in two-digit format (e.g., "01" for January)
+        filtered_assignments = [a for a in tracker.assignments if len(a.due_date) >= 7 and a.due_date[5:7] == month_filter]  #to create a list of assignments that have a due date in the specified month, ensuring that the due date string is long enough to extract the month portion
+    else:
+        print("Invalid filter option selected.")
+        return
+
+#To display the filtered assignments to the user, the function checks if any assignments matched the filter criteria and prints them out in a formatted manner. If no assignments matched, it informs the user accordingly.
+    if filtered_assignments:
+        print("\nFiltered Assignments:")
+        for assignment in filtered_assignments:
+            print(f"{assignment.type.title()}: {assignment.title} | Subject: {assignment.subject} | Score: {assignment.score}/{assignment.max_score} | Due: {assignment.due_date}")  #this line formats and prints the details of each assignment in the filtered list, providing a clear overview of the assignments that match the user's filter criteria
+    else:
+        print("No assignments found matching the filter criteria.")
 
 def main():
     tracker = GradeTracker()
@@ -80,7 +112,7 @@ def main():
         elif choice == '3':
             tracker.list_assignments()  #to call the list_assignments method of the GradeTracker instance to display all the assignments that have been added so far, providing the user with a clear overview of their current assignments and their details
         elif choice == '4':
-            print("Filtering Assignments...")
+            filter_assignments(tracker)
         elif choice == '5':
             print("Showing Summary...")
         elif choice == '0':
