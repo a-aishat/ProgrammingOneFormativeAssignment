@@ -32,12 +32,37 @@ class GradeTracker:
         for assignment in self.assignments:  #to iterate through the list of assignments and print out the details of each assignment in a formatted manner for easy reading and understanding by the user
             print(f"{assignment.type.title()}: {assignment.title} | Subject: {assignment.subject} | Score: {assignment.score}/{assignment.max_score} | Due: {assignment.due_date}")
 
+def get_valid_float(prompt):
+    while True:
+        user_input = input(prompt).strip()  #to prompt the user for input and remove any leading/trailing whitespace
+        try:
+            score = float(user_input)  #to attempt to convert the user input to a float for accurate calculations
+            if score < 0:  #to check if the score is negative and prompt the user to enter a valid non-negative score
+                print("Score cannot be negative. Please enter a valid score.")
+                continue
+            return score  #to return the valid score if it is a non-negative float
+        except ValueError:
+            print("Invalid input. Please enter a numeric value for the score.")  #to inform the user that their input was invalid and prompt them to enter a numeric value
+
+def get_valid_scores():
+    while True:
+        score = get_valid_float("Enter score received: ")
+        max_score = get_valid_float("Enter maximum score possible: ")
+        
+        if max_score == 0:  #to check if the maximum score is zero and prompt the user to enter a valid maximum score greater than zero
+            print("Maximum score cannot be zero. Please enter a valid maximum score.")
+            continue
+        if score > max_score:  
+            print("Score received cannot be greater than maximum score. Please enter valid scores.")
+            continue
+
+        return score, max_score  #to return the valid score and maximum score as a tuple for further processing
+
 def add_homework(tracker):                   #to define a function that prompts the user for homework details, creates a Homework object, and adds it to the GradeTracker instance
     print("\n Add a new homework.")
     subject = input("Enter subject: ")
     title = input("Enter title: ")
-    score = input("Enter score received: ")
-    max_score = input("Enter maximum score possible: ")
+    score, max_score = get_valid_scores()
     due_date = input("Enter due date (YYYY-MM-DD): ")
 
     homework = Homework(subject, title, score, max_score, due_date)
@@ -48,8 +73,7 @@ def add_exam(tracker):                       #to define a function that prompts 
     print("\n Add a new exam.")
     subject = input("Enter subject: ")
     title = input("Enter title: ")
-    score = input("Enter score received: ")
-    max_score = input("Enter maximum score possible: ")
+    score, max_score = get_valid_scores()
     due_date = input("Enter due date (YYYY-MM-DD): ")
 
     exam = Exam(subject, title, score, max_score, due_date)
