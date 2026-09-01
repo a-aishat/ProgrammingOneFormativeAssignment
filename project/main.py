@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class Assignment:
     def __init__(self, subject, title, score, max_score, due_date, assignment_type):
         self.subject = subject.strip()              #to remove any leading/trailing whitespace 
@@ -58,12 +60,21 @@ def get_valid_scores():
 
         return score, max_score  #to return the valid score and maximum score as a tuple for further processing
 
+def get_valid_date(prompt):
+    while True:
+        date_str = input(prompt).strip()  #to prompt the user for input and remove any leading/trailing whitespace
+        try:
+            valid_date = datetime.strptime(date_str, "%Y-%m-%d")  #to attempt to parse the user input as a date in the specified format (YYYY-MM-DD)
+            return valid_date.strftime("%Y-%m-%d")  #to return the valid date as a string in the same format for consistent storage and display
+        except ValueError:
+            print("Invalid date format. Please enter the date in YYYY-MM-DD format.")  
+
 def add_homework(tracker):                   #to define a function that prompts the user for homework details, creates a Homework object, and adds it to the GradeTracker instance
     print("\n Add a new homework.")
     subject = input("Enter subject: ")
     title = input("Enter title: ")
     score, max_score = get_valid_scores()
-    due_date = input("Enter due date (YYYY-MM-DD): ")
+    due_date = get_valid_date("Enter due date (YYYY-MM-DD): ")
 
     homework = Homework(subject, title, score, max_score, due_date)
     tracker.add_assignment(homework)         #it calls the add_assignment method of the GradeTracker instance to add the newly created Homework object to the list of assignments
@@ -74,7 +85,7 @@ def add_exam(tracker):                       #to define a function that prompts 
     subject = input("Enter subject: ")
     title = input("Enter title: ")
     score, max_score = get_valid_scores()
-    due_date = input("Enter due date (YYYY-MM-DD): ")
+    due_date = get_valid_date("Enter due date (YYYY-MM-DD): ")
 
     exam = Exam(subject, title, score, max_score, due_date)
     tracker.add_assignment(exam)             #it calls the add_assignment method of the GradeTracker instance to add the newly created Exam object to the list of assignments
